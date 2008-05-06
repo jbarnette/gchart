@@ -1,7 +1,13 @@
 require File.expand_path(File.dirname(__FILE__) + "/version")
+require File.expand_path(File.dirname(__FILE__) + "/gchart/colors")
+require File.expand_path(File.dirname(__FILE__) + "/gchart/axis")
 
 %w(base bar line pie pie_3d scatter venn xy_line).each do |type|
   require File.expand_path(File.dirname(__FILE__) + "/gchart/#{type}")
+end
+
+%w(horizontal vertical top right bottom left).each do |type|
+  require File.expand_path(File.dirname(__FILE__) + "/gchart/axis/#{type}_axis")
 end
 
 module GChart

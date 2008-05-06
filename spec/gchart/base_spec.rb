@@ -98,9 +98,25 @@ describe GChart::Base, "#query_params" do
     @chart.query_params["chtt"].should == "foo|bar"
   end
   
-  it "contains the chart's colors" do
-    @chart.colors = ["cccccc", "eeeeee"]
-    @chart.query_params["chco"].should == "cccccc,eeeeee"
+  it "contains the chart's data colors" do
+    @chart.colors = ["cccccc", "eeeeee", :salmon3, "49d", :red]
+    @chart.query_params["chco"].should == "cccccc,eeeeee,cd7054,4499dd,ff0000"
+
+    @chart.colors = []
+    @chart.query_params["chco"].should be_nil
+  end
+
+  it "contains the chart's background colors" do
+    @chart.query_params["chf"].should be_nil
+
+    @chart.entire_background = :red
+    @chart.query_params["chf"].should == "bg,s,ff0000"
+
+    @chart.chart_background = "704"
+    @chart.query_params["chf"].should == "bg,s,ff0000|c,s,770044"
+
+    @chart.entire_background = nil
+    @chart.query_params["chf"].should == "c,s,770044"
   end
 end
 
@@ -152,5 +168,91 @@ describe GChart::Base, "#write" do
     end
     
     result.should == "PAYLOAD"
+  end
+end
+
+describe GChart::Base, "#axis" do
+  before(:each) do
+    @chart = GChart::Line.new
+    @axis = @chart.axis(:bottom)
+  end
+
+  it "instantiates a new GChart::Axis of the proper axis_type" do
+    chart = GChart::Line.new
+    axis  = chart.axis(:bottom)
+    axis.is_a?(GChart::BottomAxis).should == true
+  end
+
+  it "pushes the new axis to the chart's set of axes" do
+    chart = GChart::Line.new
+    axis  = chart.axis(:bottom)
+    chart.axes.first.should == axis
+  end
+
+  [GChart::Line, GChart::Bar, GChart::Scatter].each do |chart_type|
+    it "renders axis information when chart axes are present and chart is of proper type" do
+      chart = chart_type.new
+      axis  = chart.axis(:left)
+      chart.to_url.should =~ /chxt/
+    end
+  end
+
+  [GChart::Pie3D, GChart::Pie, GChart::Venn, GChart::XYLine].each do |chart_type|
+    it "should not render axis information when chart axes are present but chart is not of proper type" do
+      chart = chart_type.new
+      axis  = chart.axis(:left)
+      chart.to_url.should_not =~ /chxt/
+    end
+  end
+end
+
+describe GChart::Base, "#entire_background" do
+  it "sets the background color for the entire chart" do
+    chart = GChart.line
+    chart.entire_background = :blue
+  end
+end
+
+describe GChart::Base, "#chart_background" do
+  it "sets the background color for just the chart area of the chart image" do
+    chart = GChart.bar
+    chart.chart_background = "876"
+  end
+end
+
+describe GChart::Base, "#render_backgrounds" do
+  before(:each) do
+    @chart = GChart::Line.new
+  end
+
+  it "verifies that background colors are valid colors" do
+    @chart.chart_background = :cyan
+    @chart.to_url
+
+    @chart.entire_background = 'f37'
+    @chart.to_url
+  end
+
+  it "blows up if either of the background colors are invalid" do
+    @chart.chart_background = :redneck_skin
+    lambda { @chart.to_url }.should raise_error(ArgumentError)
+
+    @chart.chart_background = nil
+    @chart.entire_background = 'f375'
+    lambda { @chart.to_url }.should raise_error(ArgumentError)
+  end
+
+  it "renders chart background information correctly" do
+    @chart.to_url.should_not =~ /chf=/
+
+    @chart.chart_background = 'f3A'
+    @chart.to_url.should =~ /chf=c,s,ff33AA/
+
+    @chart.entire_background = :yellow
+    @chart.to_url.should =~ /chf=bg,s,ffff00%7Cc,s,ff33AA/
+
+    @chart.chart_background = nil
+    @chart.to_url.should_not =~ /chf=bg,s,ffff00%7Cc,s,ff33AA/
+    @chart.to_url.should =~ /chf=bg,s,ffff00/
   end
 end
