@@ -8,7 +8,7 @@ a friendly Ruby interface. It can generate the URL for a given chart
 
 == PROBLEMS/TODO
 
-* Add grid lines, linear stripes, shape markers
+* Add grid lines, linear stripes, shape markers, gradient fills
 * Make venn data specification friendlier
 * Make documentation more digestible
 

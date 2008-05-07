@@ -1,5 +1,10 @@
 == UNRELEASED
 
+  * Implemented both background solid fill and chart area solid fill.
+  * Added color aliasing: 3-character colors and a COLORS table.
+  * Full support for axis labels.
+  * Implemented horizontal/vertical range markers.
+
   * Freeze GChart::VERSION.
 
 == 0.4.2 (2008-01-09)
