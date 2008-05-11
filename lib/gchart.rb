@@ -41,7 +41,7 @@ module GChart
     # Convenience constructor for GChart::Scatter.
     def scatter(*args, &block); Scatter.new(*args, &block) end
     
-    # Convenience constructor for GChart::Line.
+    # Convenience constructor for GChart::Sparkline.
     def sparkline(*args, &block); Sparkline.new(*args, &block) end
 
     # Convenience constructor for GChart::Venn.
