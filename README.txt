@@ -34,6 +34,12 @@ query parameters using the :extras key, e.g.,
   
   # scatter plot (x coords, y coords [, sizes])
   g = GChart.scatter(:data => [[1, 2, 3, 4, 5], [5, 4, 3, 2, 1], [1, 2, 3, 4, 5]])
+
+  # map chart
+  g = GChart.map(:area => 'usa', :data => {'NY'=>1,'VA'=>3,'CA'=>2})
+  
+  # meter
+  g = GChart.meter(:data => 70, :label => "70%")
   
   # chart title
   g = GChart.line(:title => "Awesomeness over Time", :data => [0, 10, 100])
@@ -136,12 +142,12 @@ are line charts, bar charts, radar charts and scatter plots. See
 
   url = chart.to_url
 
-
 == LICENSE
 
 (The MIT License)
 
-Copyright 2007-2008 John Barnette (jbarnette@rubyforge.org), Jim Ludwig (supplanter@rubyforge.org)
+Copyright 2007-2008 John Barnette (jbarnette@rubyforge.org),
+  Jim Ludwig (supplanter@rubyforge.org)
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

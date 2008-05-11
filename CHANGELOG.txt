@@ -1,10 +1,13 @@
 == UNRELEASED
 
+  * Support for Map charts [Mark Thomas]
+  * Support for Sparkline charts [Mark Thomas]
+  * Initial support for Google-o-meter [Mark Thomas]
   * Implemented both background solid fill and chart area solid fill.
   * Added color aliasing: 3-character colors and a COLORS table.
   * Full support for axis labels.
   * Implemented horizontal/vertical range markers.
-
+  * New committer, Jim Ludwig.
   * Freeze GChart::VERSION.
 
 == 0.4.2 (2008-01-09)

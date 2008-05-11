@@ -3,7 +3,6 @@ require "uri"
 
 module GChart
   class Base
-
     # Array of chart data. See subclasses for specific usage.
     attr_accessor :data
 
@@ -44,9 +43,9 @@ module GChart
       @axes   = []
       @extras = {}
 
-      @width  = 300
+      @width = 300
       @height = 200
-
+  
       options.each { |k, v| send("#{k}=", v) }
       yield(self) if block_given?
     end
@@ -113,10 +112,10 @@ module GChart
     end
 
     protected
-
+    
     def query_params(raw_params={}) #:nodoc:
       params = raw_params.merge("cht" => render_chart_type, "chs" => size)
-
+      
       render_data(params)
       render_title(params)
       render_colors(params)
@@ -135,7 +134,7 @@ module GChart
     def render_chart_type #:nodoc:
       raise NotImplementedError, "override in subclasses"
     end
-
+    
     def render_data(params) #:nodoc:
       raw = data && data.first.is_a?(Array) ? data : [data]
       max = self.max || raw.collect { |s| s.max }.max
@@ -143,10 +142,9 @@ module GChart
       sets = raw.collect do |set|
         set.collect { |n| GChart.encode(:extended, n, max) }.join
       end
-
       params["chd"] = "e:#{sets.join(",")}"
     end
-
+    
     def render_title(params) #:nodoc:
       params["chtt"] = title.tr("\n ", "|+") if title
     end
@@ -262,6 +260,5 @@ module GChart
         params["chm"] = chmr.join('|')
       end
     end
-
   end
 end

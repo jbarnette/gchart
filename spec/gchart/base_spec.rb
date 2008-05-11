@@ -118,6 +118,11 @@ describe GChart::Base, "#query_params" do
     @chart.entire_background = nil
     @chart.query_params["chf"].should == "c,s,770044"
   end
+
+  it "contains the chart's colors" do
+    @chart.colors = ["cccccc", "eeeeee"]
+    @chart.query_params["chco"].should == "cccccc,eeeeee"
+  end
 end
 
 describe GChart::Base, "#to_url" do
