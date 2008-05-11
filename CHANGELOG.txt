@@ -1,4 +1,4 @@
-== UNRELEASED
+== 0.5.0 (2008-05-11)
 
   * Support for Map charts [Mark Thomas]
   * Support for Sparkline charts [Mark Thomas]

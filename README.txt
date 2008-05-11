@@ -146,8 +146,7 @@ are line charts, bar charts, radar charts and scatter plots. See
 
 (The MIT License)
 
-Copyright 2007-2008 John Barnette (jbarnette@rubyforge.org),
-  Jim Ludwig (supplanter@rubyforge.org)
+Copyright 2007-2008 John Barnette (jbarnette@rubyforge.org), Jim Ludwig (supplanter@rubyforge.org)
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
