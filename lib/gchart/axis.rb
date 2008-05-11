@@ -59,7 +59,7 @@ module GChart
     def initialize
       @labels          = []
       @label_positions = []
-      @range_markers   = {}
+      @range_markers   = []
     end
 
     # Returns a one-character label of the axis according to its type.
