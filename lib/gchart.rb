@@ -15,6 +15,7 @@ module GChart
   SIMPLE_CHARS = ('A'..'Z').to_a + ('a'..'z').to_a + ('0'..'9').to_a
   EXTENDED_CHARS = ('A'..'Z').to_a + ('a'..'z').to_a + ('0'..'9').to_a + %w[- .]
   EXTENDED_PAIRS = EXTENDED_CHARS.collect { |first| EXTENDED_CHARS.collect { |second| first + second } }.flatten
+  URL_MAXIMUM_LENGTH = 2074 # Google does not document this -- obtained by trial and error
 
   class << self
     # Convenience constructor for GChart::Line.

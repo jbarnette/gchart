@@ -261,3 +261,15 @@ describe GChart::Base, "#render_backgrounds" do
     @chart.to_url.should =~ /chf=bg,s,ffff00/
   end
 end
+
+describe GChart::Base, "#to_url" do
+  it "plucks out data points for large sets of data so as not to exceed Google maximum url length" do
+    data = [0, 1, 2, 3, 4, 5, 4, 3, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 5, 3, 1] * 40
+    chart = GChart.line(:data => [data] * 4)
+
+    chart.data.collect{ |set| set.length }.should == [840] * 4
+
+    chart.to_url.length.should < GChart::URL_MAXIMUM_LENGTH
+    chart.data.collect{ |set| set.length }.should == [251] * 4
+  end
+end

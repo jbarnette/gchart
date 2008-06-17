@@ -87,8 +87,8 @@ module GChart
 
     # Returns the chart's URL.
     def to_url
-      query = query_params.collect { |k, v| "#{k}=#{URI.escape(v)}" }.join("&")
-      "#{GChart::URL}?#{query}"
+      pluck_out_data_points! if url_to_try.length > GChart::URL_MAXIMUM_LENGTH
+      url_to_try
     end
 
     # Returns the chart's generated PNG as a blob.
@@ -113,6 +113,11 @@ module GChart
 
     protected
     
+    def url_to_try
+      query = query_params.collect { |k, v| "#{k}=#{URI.escape(v)}" }.join("&")
+      "#{GChart::URL}?#{query}"
+    end
+
     def query_params(raw_params={}) #:nodoc:
       params = raw_params.merge("cht" => render_chart_type, "chs" => size)
       
@@ -259,6 +264,81 @@ module GChart
 
         params["chm"] = chmr.join('|')
       end
+    end
+
+    # If the length of an initially-generated URL exceeds the maximum
+    # length which Google allows for chart URLs, then we need to trim
+    # off some data.  Here we make the (rather sane) assumption that
+    # each data set is the same size as every other data set (or a
+    # size of 1, which we ignore here).  Then we remove the same
+    # number of points from each data set, in an as evenly-distributed
+    # approach as we can muster, until the length of our generated URL
+    # is less than the maximum length.
+    def pluck_out_data_points!
+      original_data_sets = data_clone(data)
+
+      divisor_upper = data.collect{ |set| set.length }.max
+      divisor_lower = 0
+      divisor       = 0
+
+      while divisor_upper - divisor_lower > 1 || url_to_try.length > GChart::URL_MAXIMUM_LENGTH
+        self.data = data_clone(original_data_sets)
+
+        if divisor_upper - divisor_lower > 1
+          divisor = (divisor_lower + divisor_upper) / 2
+        else
+          divisor += 1
+        end
+
+        data.each do |set|
+          next if set.size == 1
+          indexes_for_plucking(set.size, divisor).each do |deletion_index|
+            set.delete_at(deletion_index)
+          end
+        end
+
+        if divisor_upper - divisor_lower > 1
+          if url_to_try.length > GChart::URL_MAXIMUM_LENGTH
+            divisor_lower = divisor
+          else
+            divisor_upper = divisor
+          end
+        end
+      end
+    end
+
+    def indexes_for_plucking(array_length, divisor) #:nodoc:
+      indexes = []
+
+      last_index               = array_length - 1
+      num_points_to_remove     = divisor - 1
+      num_points_after_removal = array_length - num_points_to_remove
+      num_points_in_chunk      = num_points_after_removal / divisor.to_f
+
+      subtraction_point = array_length.to_f
+
+      1.upto(num_points_to_remove) do |point_number|
+        subtraction_point -= num_points_in_chunk
+        indexes.push( (subtraction_point - point_number).round )
+      end
+
+      indexes
+    end
+
+    def data_clone(original_array_of_arrays) #:nodoc:
+      cloned_array_of_arrays = Array.new
+
+      original_array_of_arrays.each do |original_array|
+        cloned_array = Array.new
+
+        original_array.each do |datum|
+          cloned_array << datum
+        end
+
+        cloned_array_of_arrays << cloned_array
+      end
+
+      cloned_array_of_arrays
     end
   end
 end
