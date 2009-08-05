@@ -1,6 +1,6 @@
-CHANGELOG.txt
+CHANGELOG.rdoc
 Manifest.txt
-README.txt
+README.rdoc
 Rakefile
 lib/gchart.rb
 lib/gchart/axis.rb
