@@ -8,7 +8,7 @@
 * GChart::Axis#range_markers was incorrectly initialized to a
   hash, but the supporting documentation is correct. [supplanter]
 
-== 0.5.0 / 2008-05-11
+=== 0.5.0 / 2008-05-11
 
 * Support for Map charts [Mark Thomas]
 * Support for Sparkline charts [Mark Thomas]
@@ -20,15 +20,15 @@
 * New committer, Jim Ludwig.
 * Freeze GChart::VERSION.
 
-== 0.4.2 / 2008-01-09
+=== 0.4.2 / 2008-01-09
 
 * Encoding a flatlined chart doesn't asplode [Jack Danger Canty]
 
-== 0.4.1 / 2008-01-02
+=== 0.4.1 / 2008-01-02
 
 * (bug #16756 fixed) Example in the README is incorrect
 
-== 0.4.0 / 2007-12-28
+=== 0.4.0 / 2007-12-28
 
 * New committer, Abhay Kumar
 * Implement all three encodings. Fix extended encoding calculation.
@@ -37,19 +37,19 @@
 * Pushed some bar chart params logic down where it belongs
 * Enforce pie chart spec: pie charts only take one set of data
 
-== 0.3.0 / 2007-12-24
+=== 0.3.0 / 2007-12-24
 
 * Breaking change: labels --> legend
 * Switched to RSpec, added skeletal specs for all types
 * Extensive refactoring, pulled chart types into GChart::Base subclasses
 * (bug) Errors in the static helpers should report a reasonable file and line
 
-== 0.2.0 / 2007-12-12
+=== 0.2.0 / 2007-12-12
 
 * Support for basic :labels
 * Support for pie3d
 * Minor doc cleanups
 
-== 0.1.0 (2007-12-10)
+=== 0.1.0 (2007-12-10)
 
 * Birthday!
