@@ -22,7 +22,6 @@ lib/gchart/scatter.rb
 lib/gchart/sparkline.rb
 lib/gchart/venn.rb
 lib/gchart/xy_line.rb
-lib/version.rb
 spec/gchart/axis/bottom_axis_spec.rb
 spec/gchart/axis/left_axis_spec.rb
 spec/gchart/axis/right_axis_spec.rb

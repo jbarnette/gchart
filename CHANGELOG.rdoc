@@ -1,3 +1,13 @@
+=== 1.0.0 / 2009-08-11
+
+* Moving to GitHub, since apparently people use this thing.
+* Switching to modern Hoe.
+* Modification which will remove data points from the chart if
+  the generated URL exceeds the maximum URL length which
+  Google allows. [supplanter]
+* GChart::Axis#range_markers was incorrectly initialized to a
+  hash, but the supporting documentation is correct. [supplanter]
+
 == 0.5.0 / 2008-05-11
 
 * Support for Map charts [Mark Thomas]

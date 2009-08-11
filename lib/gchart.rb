@@ -1,4 +1,3 @@
-require File.expand_path(File.dirname(__FILE__) + "/version")
 require File.expand_path(File.dirname(__FILE__) + "/gchart/colors")
 require File.expand_path(File.dirname(__FILE__) + "/gchart/axis")
 
@@ -11,6 +10,8 @@ end
 end
 
 module GChart
+  VERSION = "1.0.0"
+
   URL   = "http://chart.apis.google.com/chart"
   SIMPLE_CHARS = ('A'..'Z').to_a + ('a'..'z').to_a + ('0'..'9').to_a
   EXTENDED_CHARS = ('A'..'Z').to_a + ('a'..'z').to_a + ('0'..'9').to_a + %w[- .]
