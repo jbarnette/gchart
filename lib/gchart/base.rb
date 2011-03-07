@@ -117,8 +117,7 @@ module GChart
     end
 
 		# create a marker
-		#
-		# different chart type support different markers.
+		# @note different chart type support different markers.
 		#
 		# @param [Symbol] type :line, :text, :shape, ..
 		# @return [GChart::Marker] marker
