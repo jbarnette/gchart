@@ -9,7 +9,9 @@ module GChart
     # +label_positions+ are self-labeling.
     attr_accessor :label_positions
 
-    # Takes a +Range+ of float values. With +labels+, defines +labels+
+		# chxr \[start_val, end_val, opt_step]
+		#
+    # With +labels+, defines +labels+
     # context, meaning the +labels+ will be spaced at their proper
     # location within the +range+. Without +labels+, smart-labeling
     # occurs for +range+.
@@ -91,8 +93,8 @@ module GChart
       end
 
       if range
-        unless range.is_a?(Range)
-          raise ArgumentError.new("The range attribute has been specified with a non-Range class")
+        unless range.is_a?(Array)
+          raise ArgumentError.new("The range attribute has been specified with a non-Array class")
         end
 
         unless range.first.is_a?(Numeric)

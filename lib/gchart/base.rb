@@ -228,7 +228,7 @@ module GChart
         chxr = []
 
         @axes.each_with_index do |axis, index|
-          chxr.push("#{index},#{axis.range.first},#{axis.range.last}") if axis.range
+          chxr.push("#{index},#{axis.range.join(',')}") if axis.range
         end
 
         params["chxr"] = chxr.join('|')
