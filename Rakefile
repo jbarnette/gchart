@@ -2,6 +2,7 @@ require "rubygems"
 require "hoe"
 
 Hoe.plugin :doofus, :git
+Hoe.plugin :gemspec
 
 Hoe.spec "gchart" do
   developer "John Barnette", "jbarnette@rubyforge.org"
