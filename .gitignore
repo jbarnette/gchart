@@ -1,5 +1,6 @@
 *~
 /tags
+/.yardoc
 .DS_Store
 doc
 pkg

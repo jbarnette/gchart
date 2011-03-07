@@ -36,11 +36,16 @@ module GChart
     # Array of +GChart::Axis+ objects.
     attr_accessor :axes
 
+		# markers
+		# param [Array<GChart::Marker>] marks
+		attr_accessor :markers
+
     def initialize(options={}, &block)
       @data   = []
       @colors = []
       @legend = []
       @axes   = []
+			@markers = []
       @extras = {}
 
       @width = 300
@@ -111,6 +116,23 @@ module GChart
       axis
     end
 
+		# create a marker
+		#
+		# different chart type support different markers.
+		#
+		# @param [Symbol] type :line, :text, :shape, ..
+		# @return [GChart::Marker] marker
+		def marker(type, &block) 
+			klass = Marker::TYPES[type]
+			if not klass.applied?(self)
+				raise ArgumentError, "this chart type `#{self.class}' doesn't support `#{type}' marker"
+			end
+
+			marker = GChart::Marker.create(type, &block)
+			@markers.push(marker)
+			marker
+		end
+
     protected
     
     def url_to_try
@@ -133,8 +155,11 @@ module GChart
         end
       end
 
+			render_marker(params)
+
       params.merge(extras)
     end
+
 
     def render_chart_type #:nodoc:
       raise NotImplementedError, "override in subclasses"
@@ -178,6 +203,14 @@ module GChart
         params["chf"] += "#{separator}c,s,#{GChart.expand_color(chart_background)}" if chart_background
       end
     end
+
+		def render_marker params
+			return if @markers.empty?
+
+			chm = @markers.map{|v|v.to_param.gsub(/,+$/,"")}
+
+			params["chm"] = chm.join('|')
+		end
 
     def render_axes(params) #:nodoc:
       @axes.each do |axis|
@@ -260,7 +293,6 @@ module GChart
 				end
 
 				params["chxtc"] = chxtc.join('|')
-				p params["chxtc"]
 			end
 		end
 

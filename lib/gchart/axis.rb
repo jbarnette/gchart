@@ -1,4 +1,17 @@
 module GChart
+	#
+	#
+	#   bar = GChart.bar do |b|
+	#     b.axis(:left) { |a|
+	#       a.tick_length = 12
+	#     }
+	#
+	#     b.axis(:bottom) { |a|
+	#       a.tick_lengths = [12,13]
+	#     }
+	#   end
+	#
+	#
   class Axis
 
     # Array of axis labels. Can be exactly placed along the axis with
@@ -14,6 +27,7 @@ module GChart
     # location within the +range+. Without +labels+, smart-labeling
     # occurs for +range+.
 		#
+		# @since 1.1 change range from Range to Array
 		# @param [Array] range \[start_val, end_val, opt_step]
     attr_accessor :range
 
@@ -99,6 +113,8 @@ module GChart
 		def tick_length= length
 			@tick_length = Array === length ? length : [length]
 		end
+		alias tick_lengths tick_length
+		alias tick_lengths= tick_length=
 
     AXIS_TYPES = [ :top, :right, :bottom, :left ]
 
@@ -191,10 +207,6 @@ module GChart
 
 			if tick_color and not GChart.valid_color?(tick_color)
         raise ArgumentError.new("The tick_color attribute has been specified with an invalid color")
-			end
-
-			if tick_length and not tick_length.is_a?(Numeric)
-				raise ArgumentError.new("The tick_length must be a numeric value")
 			end
 
 			if axis_color and not GChart.valid_color?(axis_color)

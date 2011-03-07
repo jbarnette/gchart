@@ -1,7 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + "/gchart/colors")
 require File.expand_path(File.dirname(__FILE__) + "/gchart/axis")
+require_relative "gchart/marker"
 
-%w(base bar line map meter pie pie_3d scatter sparkline venn xy_line).each do |type|
+%w(base bar line map meter pie pie_3d scatter sparkline venn xy_line radar).each do |type|
   require File.expand_path(File.dirname(__FILE__) + "/gchart/#{type}")
 end
 
@@ -48,6 +49,9 @@ module GChart
 
     # Convenience constructor for GChart::Venn.
     def venn(*args, &block); Venn.new(*args, &block) end    
+
+    # Convenience constructor for GChart::Radar.
+		def radar(*args, &block); Radar.new(*args, &block) end
         
     # Encode +n+ as a string. +n+ is normalized based on +max+.
     # +encoding+ can currently only be :extended.

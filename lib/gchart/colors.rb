@@ -5,11 +5,7 @@ module GChart
     # color.  Also expands a +color+ symbol from the +COLORS+ +Hash+
     # into its corresponding 6-character rrggbb color.  Any other
     # +color+ is returned unmodified.
-		#
-		# return nil if color is nil
     def expand_color(color)
-			return nil if color.nil?
-
       color.is_a?(String) && color.size == 3          \
       ? color.split('').collect{ |c| c + c }.join('') \
       : COLORS[color]                                 \
@@ -28,6 +24,7 @@ module GChart
          (color.is_a?(String) and color =~ /^[0-9a-fA-F]+$/ and
           color.size.to_s =~ /^(3|6|8)$/))
     end
+		alias check_valid_color valid_color?
   end
 
   COLORS = {

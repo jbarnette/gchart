@@ -285,7 +285,7 @@ describe GChart::Base do
 				}
 
 				c.axis(:bottom) { |a|
-					a.tick_length = [1,2]
+					a.tick_lengths = [1,2]
 				}
 			end
 		}
@@ -295,6 +295,25 @@ describe GChart::Base do
 		end
 
 	end
+
+	describe "#render_marker" do
+		it "return a url with chm=" do
+			chart = GChart::Bar.new do |c|
+				c.marker(:line) {|m|
+					m.color = "0033FF"
+					m.series_index = 0
+					m.which_points = 0
+					m.size = 5
+					m.z_order = 1
+				}
+			end
+
+			chart.to_url.should =~/chm=D,0033FF,0,0,5,1/
+
+		end
+
+	end
+
 end
 
 

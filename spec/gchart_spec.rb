@@ -64,6 +64,6 @@ describe GChart, ".line" do
     chart = GChart.line(:title => "test", :data => [1, 100, 10000])
 
     chart.query_params.should == expected
-    chart.to_url.should == "http://chart.apis.google.com/chart?chs=300x200&cht=lc&chtt=test&chd=e:AAAp.."
+    chart.to_url.should == "http://chart.apis.google.com/chart?cht=lc&chs=300x200&chd=e:AAAp..&chtt=test"
   end
 end
