@@ -9,25 +9,72 @@ module GChart
     # +label_positions+ are self-labeling.
     attr_accessor :label_positions
 
-		# chxr \[start_val, end_val, opt_step]
-		#
     # With +labels+, defines +labels+
     # context, meaning the +labels+ will be spaced at their proper
     # location within the +range+. Without +labels+, smart-labeling
     # occurs for +range+.
+		#
+		# @param [Array] range \[start_val, end_val, opt_step]
     attr_accessor :range
 
-    # An rrggbb color for axis text.
+		def range= range
+			# for compablity.
+			if Range === range
+				@range = [range.first, range.last]
+			else
+				@range = range
+			end
+		end
+
+
+    # An RRGGBB color for axis text. 
+		#
+		# @param [String] text_color (gray)
     attr_accessor :text_color
+		alias label_color text_color
+		alias label_color= text_color=
+		def text_color; @text_color || "676767" end
 
-    # Size of font in pixels. To set +font_size+, +text_color+ is also
-    # required.
+		# The color of this axis line.
+		#
+		# @param [String] axis_color (gray)
+		attr_accessor :axis_color
+
+		# the tick mark color.
+		#
+		# @param [String] tick_color (gray)
+		attr_accessor :tick_color
+
+		# Whether to show tick marks and/or axis lines for this axis. 
+		# Tick marks and axis lines are only available for innermost axes 
+		# (for example, they are not supported for the outer of two x-axes). 
+		#
+		# Use one of the following values:
+		# * l (lowercase 'L') - Draw axis line only.
+		# * t - Draw tick marks only. Tick marks are the little lines next to axis labels.
+		# * lt - [Default] Draw both an axis line and tick marks for all labels.
+		# * _ - (Underscore) Draw neither axis line nor tick marks. If you want to hide an axis line, use this value.
+		#
+		# @param [String] axis_or_tick ("lt")
+		attr_accessor :axis_or_tick
+		def axis_or_tick; @axis_or_tick || "lt" end
+
+
+    # Size of font in pixels. 
+		#
+		# @param [Numeric] font_size (11.5)
     attr_accessor :font_size
+		def font_size; @font_size || 11.5 end
 
-    # +TEXT_ALIGNMENT+ property for axis labeling. To set
-    # +text_alignment+, both +text_color+ and +font_size+ must also be
-    # set.
+		# Label alignment. For top or bottom axes, this describes how the label 
+		# aligns to the tick mark above or below it; for left or right axes, 
+		# this describes how the aligns inside its bounding box, which touches the axis. 
+		#
+		# @param [Symbol] text_alignment (:center) :left, :right, :center
     attr_accessor :text_alignment
+		alias alignment text_alignment
+		alias alignment= text_alignment=
+		def text_alignment; @text_alignment || :center end
 
     # Array of 2-element sub-arrays such that the 1st element in each
     # sub-array is a +Range+ of float values which describe the start
@@ -36,6 +83,22 @@ module GChart
     # and +:bottom+ +AXIS_TYPES+, markers are vertical. For +:right+
     # and +:left+ +AXIS_TYPES+, markers are horizontal.
     attr_accessor :range_markers
+
+		# Axis Tick Mark Styles (chxtc)
+		# @note Use the chxs parameter to change the tick mark color.
+		#
+		# Length of the tick marks on that axis, in pixels. 
+		# If a single value is given, it will apply to all values; 
+		# if more than one value is given, the axis tick marks will cycle through the list of values for that axis.
+		# Psitive values are drawn outside the chart area and cropped by the chart borders. 
+		# The maximum positive value is 25. 
+		# Negative values are drawn inside the chart area and cropped by the chart area borders.
+		#
+		# @param [Numeric, Array<Numeric>] tick_length
+		attr_accessor :tick_length
+		def tick_length= length
+			@tick_length = Array === length ? length : [length]
+		end
 
     AXIS_TYPES = [ :top, :right, :bottom, :left ]
 
@@ -102,16 +165,6 @@ module GChart
         end
       end
 
-      if font_size and not text_color
-        raise ArgumentError.new("To specify a font_size, a text_color must also be specified")
-      end
-
-      if text_alignment and not (text_color and font_size)
-        raise ArgumentError.new(
-          "To specify a text_alignment, both text_color and font_size must also be specified"
-        )
-      end
-
       if text_color and not GChart.valid_color?(text_color)
         raise ArgumentError.new("The text_color attribute has been specified with an invalid color")
       end
@@ -135,6 +188,22 @@ module GChart
           "element in each sub-array is a valid color"
         )
       end
+
+			if tick_color and not GChart.valid_color?(tick_color)
+        raise ArgumentError.new("The tick_color attribute has been specified with an invalid color")
+			end
+
+			if tick_length and not tick_length.is_a?(Numeric)
+				raise ArgumentError.new("The tick_length must be a numeric value")
+			end
+
+			if axis_color and not GChart.valid_color?(axis_color)
+        raise ArgumentError.new("The axis_color attribute has been specified with an invalid color")
+			end
+
+			if axis_or_tick and not axis_or_tick.is_a?(String)
+        raise ArgumentError.new("The axis_or_tick must be a String")
+			end
     end
 
   end

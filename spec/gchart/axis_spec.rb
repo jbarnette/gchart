@@ -72,29 +72,20 @@ describe GChart::Axis do
 
   describe ".range" do
     it "will contain a range from which to derive labels" do
-      @axis.range = 0..1300
+      @axis.range = [0, 1300]
     end
   end
 
   describe ".validate!" do
-    it "will blow up if range() does not contain a range" do
-      @axis.range = [0, 50, 100]
-      lambda { @axis.validate! }.should raise_error(ArgumentError)
-    end
-
-    it "will blow up if range() contains a range of non-numeric values" do
-      @axis.range = 'a'..'z'
-      lambda { @axis.validate! }.should raise_error(ArgumentError)
-    end
 
     it "will be content if a range is used in combination with labels" do
-      @axis.range = 0..100
+      @axis.range = [0, 100]
       @axis.labels = [25, 50, 75]
       @axis.validate!
     end
 
     it "will be content if a range is used in combination with labels and label_positions both" do
-      @axis.range = 0..100
+      @axis.range = [0, 100]
       @axis.labels = %w(25 50 75)
       @axis.label_positions = [25, 50, 75]
       @axis.validate!
@@ -136,11 +127,6 @@ describe GChart::Axis do
       @axis.validate!
     end
 
-    it "will blow up if font_size is given without a corresponding text_color" do
-      @axis.font_size = 12
-      lambda { @axis.validate! }.should raise_error(ArgumentError)
-    end
-
     it "will blow up if the text_color is valid but the font_size is not numeric" do
       @axis.text_color = :black
       @axis.font_size = "13.5"
@@ -152,23 +138,6 @@ describe GChart::Axis do
       @axis.font_size = 11.5
       @axis.text_color = :cyan
       @axis.validate!
-    end
-
-    it "will blow up if text_alignment is given without both font_size and text_color" do
-      @axis.text_alignment = :left
-      lambda { @axis.validate! }.should raise_error(ArgumentError)
-    end
-
-    it "will blow up if text_alignment is given with a valid font_size but no text_color" do
-      @axis.text_alignment = :left
-      @axis.font_size = 10
-      lambda { @axis.validate! }.should raise_error(ArgumentError)
-    end
-
-    it "will blow up if text_alignment is given with a valid text_color but no font_size" do
-      @axis.text_alignment = :left
-      @axis.text_color = :magenta
-      lambda { @axis.validate! }.should raise_error(ArgumentError)
     end
 
     it "will blow up if font_size and text_color are valid, but text_alignment isn't in TEXT_ALIGNMENT table" do
@@ -212,5 +181,7 @@ describe GChart::Axis do
       lambda { @axis.validate! }.should raise_error(ArgumentError)
     end
   end
+
+
 
 end

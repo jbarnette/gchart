@@ -190,6 +190,7 @@ module GChart
       render_axis_ranges(params)
       render_axis_styles(params)
       render_axis_range_markers(params)
+			render_axis_tick_length(params)
     end
 
     def render_axis_type_labels(params) #:nodoc:
@@ -236,21 +237,32 @@ module GChart
     end
 
     def render_axis_styles(params) #:nodoc:
-      if @axes.any?{ |axis| axis.text_color }
-        chxs = []
+			chxs = []
 
-        @axes.each_with_index do |axis, index|
-          if axis.text_color
-            chxs.push(
-              "#{index}," +
-              [GChart.expand_color(axis.text_color), axis.font_size, axis.text_alignment].compact.join(',')
-            )
-          end
-        end
+			@axes.each_with_index do |axis, index|
+					chxs.push(
+						"#{index}," +
+						[ GChart.expand_color(axis.text_color), axis.font_size, Axis::TEXT_ALIGNMENT[axis.text_alignment],
+							axis.axis_or_tick, GChart.expand_color(axis.tick_color), GChart.expand_color(axis.axis_color)
+						].compact.join(',')
+					)
+			end
 
-        params["chxs"] = chxs.join('|')
-      end
+			params["chxs"] = chxs.join('|')
     end
+
+		def render_axis_tick_length(params) #:nodoc:
+			if @axes.any?{|axis| axis.tick_length }
+				chxtc=[]
+
+				@axes.each.with_index do |axis, index|
+					chxtc.push( ([index] + axis.tick_length).join(',') ) if axis.tick_length
+				end
+
+				params["chxtc"] = chxtc.join('|')
+				p params["chxtc"]
+			end
+		end
 
     def render_axis_range_markers(params) #:nodoc:
       if @axes.any?{ |axis| axis.range_markers.size > 0 }

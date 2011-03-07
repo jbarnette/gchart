@@ -273,3 +273,28 @@ describe GChart::Base, "#to_url" do
     chart.data.collect{ |set| set.length }.should == [251] * 4
   end
 end
+
+describe GChart::Base do
+
+	describe "#render_axes" do
+
+		before(:each) { 
+			@chart = GChart::Bar.new do |c|
+				c.axis(:left) { |a|
+					a.tick_length = 12
+				}
+
+				c.axis(:bottom) { |a|
+					a.tick_length = [1,2]
+				}
+			end
+		}
+
+		it "render tick length correctly" do
+			@chart.to_url.should =~ /chxtc=0,12|1,1,2/
+		end
+
+	end
+end
+
+
