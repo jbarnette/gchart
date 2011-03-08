@@ -60,10 +60,10 @@ end
 
 describe GChart, ".line" do
   it "can render a basic line URL" do
-    expected = { "cht" => "lc", "chs" => "300x200", "chd" => "e:AAAp..", "chtt" => "test" }
+    expected = { "cht" => "lc", "chs" => "300x200", "chd" => "e:AAAp..", "chtt" => "test", "chts" => "000000" }
     chart = GChart.line(:title => "test", :data => [1, 100, 10000])
 
     chart.query_params.should == expected
-    chart.to_url.should == "http://chart.apis.google.com/chart?cht=lc&chs=300x200&chd=e:AAAp..&chtt=test"
+    chart.to_url.should == "http://chart.apis.google.com/chart?cht=lc&chs=300x200&chd=e:AAAp..&chtt=test&chts=000000"
   end
 end

@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{gchart}
-  s.version = "1.0.0.20110308073316"
+  s.version = "1.0.0.20110308194418"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["John Barnette", "Jim Ludwig"]
