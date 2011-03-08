@@ -12,6 +12,24 @@ module GChart
     # Chart title.
     attr_accessor :title
 
+		# Chart title color
+		#
+		# @param [color] color optional
+		attr_accessor :color
+		def color= color
+			GChart.check_valid_color color
+			@color = GChart.expand_color color
+		end
+
+		def color
+			@color ||= "000000"
+		end
+
+		# Chart title font size
+		#
+		# @param [Numeric] font_size optional
+		attr_accessor :font_size
+
     # Array of rrggbb colors, one per data set.
     attr_accessor :colors
 
@@ -144,6 +162,7 @@ module GChart
       
       render_data(params)
       render_title(params)
+      render_title_style(params)
       render_colors(params)
       render_legend(params)
       render_backgrounds(params)
@@ -177,6 +196,10 @@ module GChart
     def render_title(params) #:nodoc:
       params["chtt"] = title.tr("\n ", "|+") if title
     end
+
+    def render_title_style(params) #:nodoc:
+			params["chts"] = [color, font_size].join(',').gsub(/,+$/, '') if title
+		end
 
     def render_colors(params) #:nodoc:
       unless colors.empty?

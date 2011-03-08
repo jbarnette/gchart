@@ -97,6 +97,13 @@ describe GChart::Base, "#query_params" do
     @chart.title = "foo\nbar"
     @chart.query_params["chtt"].should == "foo|bar"
   end
+
+	it "contains chart title's color and font_size" do
+		@chart.title = "a"
+		@chart.color = "001111"
+		@chart.font_size = 12
+		@chart.query_params["chts"].should == "001111,12"
+	end
   
   it "contains the chart's data colors" do
     @chart.colors = ["cccccc", "eeeeee", :salmon3, "49d", :red]
