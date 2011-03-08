@@ -33,7 +33,11 @@ module GChart
 		# Which point(s) to draw markers on
 		#
 		# optional
-		attr_accessor :which_points
+		# @param [String] which_points ("-1")
+		attr_accessor :which_points 
+		def which_points
+			@which_points || "-1"
+		end
 
 		# The size of the marker, in pixels.
 		attr_accessor :size

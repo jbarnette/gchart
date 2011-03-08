@@ -8,6 +8,8 @@ For Example:
 	chm = "a,,12,"  # this is valid. can be get by ['a', nil, 12, nil].join(',')
 	chm = "a,,12,," # this is not valid
 
+	recommand use chm = "a,<default_value>,12", if you omit <opt_b>, http://imagecharteditor.appspot.com/#Import chart from URL not work
+
 
 Resources
 ---------
