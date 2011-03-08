@@ -3,9 +3,15 @@ module GChart
   class << self
     # Expands a 3-character rgb +color+ into a 6-character rrggbb
     # color.  Also expands a +color+ symbol from the +COLORS+ +Hash+
-    # into its corresponding 6-character rrggbb color.  Any other
+    # into its corresponding 6-character rrggbb color. remove '#' at the begining of string Any other
     # +color+ is returned unmodified.
+		#
+		# @param [String,Symbol] color :red "RGB" "RRGGBB" "#RGB" "#RRGGBB"
     def expand_color(color)
+			if String === color
+				color = color.match(/^#?(.*)/)[1]
+			end
+
       color.is_a?(String) && color.size == 3          \
       ? color.split('').collect{ |c| c + c }.join('') \
       : COLORS[color]                                 \

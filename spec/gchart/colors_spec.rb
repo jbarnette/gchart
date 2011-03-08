@@ -13,6 +13,10 @@ describe GChart, ".expand_color" do
     end
   end
 
+	it "remove mark in the begining of string" do
+		GChart.expand_color("#FF00FF").should == "FF00FF"
+	end
+
   [ :canary_burnt_sienna, 3, 7.4, ['fff'], {'693' => 'cool'}, nil ].each do |non_color|
     it "does not expand #{non_color}" do
       GChart.expand_color(non_color).should == non_color
