@@ -2,6 +2,22 @@ require "open-uri"
 require "uri"
 
 module GChart
+	#
+	#
+	# GChart.bar do |c|
+	#   c.legend = [1,2]
+	# end
+	#
+	# GChart.bar do |c|
+	#   c.legend { |l|
+	#     l.data = [1,2]
+	#     l.pos = x
+	#     l.label_order = x
+	#     l.color = "00ff00"
+	#     l.size = 12
+	#   }
+	# end
+	#
   class Base
     # Array of chart data. See subclasses for specific usage.
     attr_accessor :data
@@ -35,6 +51,17 @@ module GChart
 
     # Array of legend text, one per data set.
     attr_accessor :legend
+
+		# @overload legend()
+		# @overload legend(o={})
+		#   @yieldparam [Legend] l
+		def legend o={}, &blk
+			if o.empty? and not blk
+				return @legend 
+			end
+
+			@legend = Legend.new(o, &blk)
+		end
 
     # Max data value for quantization.
     attr_accessor :max
@@ -208,7 +235,13 @@ module GChart
     end
 
     def render_legend(params) #:nodoc:
-      params["chdl"] = legend.join("|") unless legend.empty?
+			return if Array === @legend and @legend.empty?
+
+			if Array === legend
+				params["chdl"] = legend.join("|") 
+			else
+				params.merge! legend.to_params_hash
+			end
     end
 
     def render_backgrounds(params) #:nodoc:

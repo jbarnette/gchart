@@ -14,8 +14,5 @@ module GChart
       "p"
     end
     
-    def render_legend(params) #:nodoc:
-      params["chl"] = legend.join("|") if legend
-    end
   end
 end

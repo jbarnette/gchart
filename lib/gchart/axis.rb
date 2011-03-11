@@ -79,6 +79,8 @@ module GChart
 		# @param [Numeric] font_size (11.5)
     attr_accessor :font_size
 		def font_size; @font_size || 11.5 end
+		alias text_size font_size
+		alias text_size= font_size=
 
 		# Label alignment. For top or bottom axes, this describes how the label 
 		# aligns to the tick mark above or below it; for left or right axes, 

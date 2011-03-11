@@ -1,6 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + "/gchart/colors")
 require File.expand_path(File.dirname(__FILE__) + "/gchart/axis")
 require_relative "gchart/marker"
+require_relative "gchart/legend"
 
 %w(base bar line map meter pie pie_3d scatter sparkline venn xy_line radar).each do |type|
   require File.expand_path(File.dirname(__FILE__) + "/gchart/#{type}")

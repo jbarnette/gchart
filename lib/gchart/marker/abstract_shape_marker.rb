@@ -23,7 +23,7 @@ module GChart
 		# @param [color] color see GChart color
 		attr_accessor :color
 		def color= color
-			GChart.valid_color?(color)
+			GChart.check_valid_color color
 			@color = GChart.expand_color(color)
 		end
 

@@ -12,12 +12,6 @@ describe GChart::Pie, "#query_params" do
   it "contains the chart's type" do
     @chart.query_params["cht"].should == "p"
   end
-  
-  it "contains the chart's legend" do
-    @chart.legend = ["foo"]
-    @chart.query_params.keys.include?("chl").should be_true
-    @chart.query_params["chl"].should == "foo"
-  end
 end
 
 describe GChart::Pie, "#data" do

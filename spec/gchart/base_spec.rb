@@ -316,9 +316,32 @@ describe GChart::Base do
 			end
 
 			chart.to_url.should =~/chm=D,0033FF,0,0,5,1/
+		end
+	end
 
+	describe "#legend" do
+		it "don't have a lengend when new create" do
+			chart = GChart::Bar.new 
+			chart.to_url.should_not =~  /chdl=/
 		end
 
+		it "set a legend attribute" do
+			chart = GChart::Bar.new do |c|
+				c.legend = [1,2]
+			end
+
+			chart.to_url.should =~ /chdl=/
+		end
+
+		it "call legend with block" do
+			chart = GChart::Bar.new do |c|
+				c.legend do |l|
+					l.labels = [1,2]
+				end
+			end
+
+			chart.to_url.should =~ /chdl=/
+		end
 	end
 
 end
