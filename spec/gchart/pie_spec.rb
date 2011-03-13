@@ -4,6 +4,15 @@ describe GChart::Pie do
   it "renders the correct chart type" do
     GChart::Pie.new.render_chart_type.should == "p"
   end
+
+	it "support labels" do
+		c = GChart.pie do |c|
+			c.labels = %w(a b)
+		end
+
+		c.query_params["chl"].should == "a|b"
+
+	end
 end
 
 describe GChart::Pie, "#query_params" do

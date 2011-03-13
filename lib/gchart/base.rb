@@ -92,6 +92,7 @@ module GChart
       @axes   = []
 			@markers = []
       @extras = {}
+			@labels = []
 
       @width = 300
       @height = 200
@@ -177,6 +178,10 @@ module GChart
 			marker
 		end
 
+		attr_accessor :labels
+
+
+
     protected
     
     def url_to_try
@@ -193,6 +198,7 @@ module GChart
       render_colors(params)
       render_legend(params)
       render_backgrounds(params)
+			render_labels(params)
 
       unless @axes.empty?
         if is_a?(GChart::Line) or is_a?(GChart::Bar) or is_a?(GChart::Scatter) # or is_a?(GChart::Radar)
@@ -204,6 +210,11 @@ module GChart
 
       params.merge(extras)
     end
+
+		def render_labels params
+			return if labels.empty?
+			params["chl"] = labels.join('|')
+		end
 
 
     def render_chart_type #:nodoc:

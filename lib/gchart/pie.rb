@@ -10,9 +10,9 @@ module GChart
       super(data)
     end
     
+
     def render_chart_type #:nodoc:
       "p"
     end
-    
   end
 end
